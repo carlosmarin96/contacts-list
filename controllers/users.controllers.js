@@ -1,15 +1,15 @@
 const {response} = require('express');
+const User = require('../models/user');
 
-const postUser = (req, res = response) => {
-    const {name, lastName, email, password, role, date} = req.body;
+const postUser = async(req, res = response) => {
+
+    const body = req.body;
+    const user = new User(body);
+
+    await user.save();
 
     res.json({
-        name,
-        lastName,
-        email,
-        password,
-        role,
-        date
+        user
     });
 }
 
@@ -25,6 +25,7 @@ const deleteUser = (req, res = response) => {
     const { id } = req.params;
 
     res.json({
+        msg: 'Contacts list',
         id
     });
 }
