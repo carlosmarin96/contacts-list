@@ -1,37 +1,41 @@
-const { Schema, model} = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const UserSchema = Schema({
     name: {
         type: String,
         required: [true, 'Name is required']
     },
-    email:{
+    lastName: {
+        type: String,
+        required: [true, 'Lastname is required']
+    },
+    email: {
         type: String,
         required: [true, 'Email is required'],
         unique: true
     },
-    password:{
+    password: {
         type: String,
         required: [true, 'Password is required']
     },
-    img:{
+    img: {
         type: String
     },
-    role:{
-        type:String,
-        required:true,
+    role: {
+        type: String,
+        required: true,
         enum: ['ADMIN_ROLE', 'USER_ROLE']
     },
-    status:{
+    status: {
         type: Boolean,
         default: true
     },
     google: {
-        type:Boolean,
-        default:false
+        type: Boolean,
+        default: false
     },
-    creation_date:{
-        type:Date,
+    creation_date: {
+        type: Date,
         default: Date.now
     }
 });
