@@ -22,7 +22,7 @@ const postUser = async (req, res = response) => {
 
 const putUser = async (req, res = response) => {
     const { id } = req.params;
-    const { password, google, creation_date, email, ...rest } = req.body;
+    const { _id, password, google, creation_date, email, ...rest } = req.body;
 
     //Validate id in DB
     if (password) {
