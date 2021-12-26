@@ -5,9 +5,7 @@ const { postUser, putUser, deleteUser } = require('../controllers/users.controll
 
 const { roleValidation, emailValidation, userExistById } = require('../helpers/db-validators');
 
-const { validateFields } = require('../middlewares/validate-fields');
-const { validateJWT } = require('../middlewares/validate-jwt');
-const { isUserAuthorized } = require('../middlewares/validate-user');
+const { validateFields, validateJWT, isUserAuthorized } = require('../middlewares');
 
 const router = Router();
 
@@ -23,7 +21,7 @@ router.post('/', [
 
 router.put('/:id', [
     validateJWT,
-    isUserAuthenticated,
+    isUserAuthorized,
     check('id', 'Id is not valid').isMongoId(),
     check('id').custom(userExistById),
     check('role').custom(roleValidation),
