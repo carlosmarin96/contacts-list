@@ -16,3 +16,13 @@ router.post('/', [
     check('createdBy', 'Id is not valid').isMongoId(),
     validateFields
 ], postContact);
+
+router.put('/:id', [], putContact);
+
+router.delete(':id', [], deleteContact);
+
+router.get('/', [], getContacts);
+
+router.get('/:id', [], getContactById);
+
+module.exports = router;
