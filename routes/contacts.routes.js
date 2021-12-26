@@ -1,11 +1,15 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { postContact } = require('../controllers/contacts.controllers');
+const { postContact, getContacts } = require('../controllers/contacts.controllers');
 
 const { validateFields } = require('../middlewares/validate-fields');
 
 const router = Router();
+
+router.get('/', [], getContacts);
+
+// router.get('/:id', [], getContactById);
 
 router.post('/', [
     check('name', 'Name is required').not().isEmpty(),
@@ -17,12 +21,9 @@ router.post('/', [
     validateFields
 ], postContact);
 
-router.put('/:id', [], putContact);
+// router.put('/:id', [], putContact);
 
-router.delete(':id', [], deleteContact);
+// router.delete(':id', [], deleteContact);
 
-router.get('/', [], getContacts);
-
-router.get('/:id', [], getContactById);
 
 module.exports = router;
