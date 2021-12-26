@@ -7,7 +7,7 @@ const { roleValidation, emailValidation, userExistById } = require('../helpers/d
 
 const { validateFields } = require('../middlewares/validate-fields');
 const { validateJWT } = require('../middlewares/validate-jwt');
-const { isUserAuthenticated } = require('../middlewares/validate-user');
+const { isUserAuthorized } = require('../middlewares/validate-user');
 
 const router = Router();
 
@@ -32,7 +32,7 @@ router.put('/:id', [
 
 router.delete('/:id', [
     validateJWT,
-    isUserAuthenticated,
+    isUserAuthorized,
     check('id', 'Id is not valid').isMongoId(),
     check('id').custom(userExistById),
     validateFields

@@ -1,18 +1,17 @@
 
 const { response } = require('express');
 
-const isUserAuthenticated = (req, res = response, next) => {
-    const { id } = req.params;
-
+const isUserAuthorized = (req, res = response, next) => {
     if (!req.user) {
         return res.status(500).json({
             msg: 'Verify, but token is not validated'
         });
     }
 
-    const { uid, name } = req.user;
+    const { id } = req.params;
+    const { uid, name, role } = req.user;
 
-    if (id !== uid) {
+    if (id !== uid || role !== 'ADMIN_ROLE') {
         return res.status(401).json({
             msg: `${name} is not a valid user`
         });
@@ -23,5 +22,5 @@ const isUserAuthenticated = (req, res = response, next) => {
 }
 
 module.exports = {
-    isUserAuthenticated
+    isUserAuthorized
 }
