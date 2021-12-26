@@ -42,9 +42,11 @@ const putUser = async (req, res = response) => {
 const deleteUser = async (req, res = response) => {
     const { id } = req.params;
 
+    const uid = req.uid;
+
     const user = await User.findByIdAndUpdate(id, { status: false });
 
-    res.json(user);
+    res.json({ user, uid });
 }
 
 module.exports = {
