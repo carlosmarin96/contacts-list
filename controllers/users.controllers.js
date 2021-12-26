@@ -39,13 +39,12 @@ const putUser = async (req, res = response) => {
     });
 }
 
-const deleteUser = (req, res = response) => {
+const deleteUser = async (req, res = response) => {
     const { id } = req.params;
 
-    res.json({
-        msg: 'Contacts list',
-        id
-    });
+    const user = await User.findByIdAndUpdate(id, { status: false });
+
+    res.json(user);
 }
 
 module.exports = {
