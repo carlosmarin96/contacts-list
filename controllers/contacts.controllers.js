@@ -7,20 +7,20 @@ const { Contact } = require('../models');
 const getContacts = async (req = request, res = response) => {
 
     res.json('ok');
-    //     const { limit = 8, since = 0 } = req.query;
-    //     const idFromUser = req.user.id;
+    const { limit = 8, since = 0 } = req.query;
+    const idFromUser = req.user._id;
 
-    //     const [total, contacts] = await Promise.all([
-    //         Contact.countDocuments({ createdBy: idFromUser }),
-    //         Contact.find({ createdBy: idFromUser })
-    //             .skip(Number(since))
-    //             .limit(Number(limit))
-    //     ]);
+    const [total, contacts] = await Promise.all([
+        Contact.countDocuments({ createdBy: idFromUser }),
+        Contact.find({ createdBy: idFromUser })
+            .skip(Number(since))
+            .limit(Number(limit))
+    ]);
 
-    //     res.json({
-    //         total,
-    //         contacts
-    //     });
+    res.json({
+        total,
+        contacts
+    });
 }
 
 const postContact = async (req, res = response) => {
