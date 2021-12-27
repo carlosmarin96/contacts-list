@@ -12,7 +12,7 @@ const ContactSchema = Schema({
     gender: {
         type: String,
         required: [true, 'Gender is required'],
-        enum: ['F', 'M', 'O']
+        enum: ['female', 'male', 'other']
     },
     phone: {
         type: String
@@ -24,7 +24,8 @@ const ContactSchema = Schema({
         type: Date,
     },
     createdBy: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'User',
         required: [true, 'It must be created by user']
     },
     date_added: {
