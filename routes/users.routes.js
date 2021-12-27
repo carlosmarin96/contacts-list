@@ -23,7 +23,6 @@ router.put('/:id', [
     isUserAuthorized,
     check('id', 'Id is not valid').isMongoId(),
     check('id').custom(userExistById),
-    check('role').custom(roleValidation),
     validateFields
 ], putUser);
 

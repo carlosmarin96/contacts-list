@@ -1,6 +1,7 @@
 
 const { response } = require('express');
 
+
 const isUserAuthorized = (req, res = response, next) => {
     if (!req.user) {
         return res.status(500).json({
@@ -9,9 +10,9 @@ const isUserAuthorized = (req, res = response, next) => {
     }
 
     const { id } = req.params;
-    const { uid, name, role } = req.user;
+    const { _id, name } = req.user;
 
-    if (id !== uid || role !== 'ADMIN_ROLE') {
+    if (JSON.stringify(id) !== JSON.stringify(_id)) {
         return res.status(401).json({
             msg: `${name} is not a valid user`
         });

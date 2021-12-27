@@ -5,14 +5,13 @@ const { Contact } = require('../models');
 
 
 const getContacts = async (req = request, res = response) => {
-
-    res.json('ok');
     const { limit = 8, since = 0 } = req.query;
     const idFromUser = req.user._id;
 
     const [total, contacts] = await Promise.all([
         Contact.countDocuments({ createdBy: idFromUser }),
         Contact.find({ createdBy: idFromUser })
+            .populate('createdBy', 'name')
             .skip(Number(since))
             .limit(Number(limit))
     ]);
@@ -21,6 +20,19 @@ const getContacts = async (req = request, res = response) => {
         total,
         contacts
     });
+}
+
+const getContactById = async (req = request, res = response) => {
+    const { id } = req.params;
+    const idFromUser = req.user._id;
+
+    const contact = await Contact.findById(id).populate('createdBy', 'name');
+
+    if (JSON.stringify(contact.createdBy._id) !== JSON.stringify(idFromUser)) {
+        return res.status(401).json({ msg: "No authorized" });
+    }
+
+    res.json(contact);
 }
 
 const postContact = async (req, res = response) => {
@@ -70,5 +82,6 @@ const postContact = async (req, res = response) => {
 
 module.exports = {
     getContacts,
-    postContact
+    postContact,
+    getContactById
 }
