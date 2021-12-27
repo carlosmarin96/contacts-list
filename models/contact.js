@@ -5,10 +5,6 @@ const ContactSchema = Schema({
         type: String,
         required: [true, 'Name is required']
     },
-    lastName: {
-        type: String,
-        required: [true, 'Last name is required']
-    },
     email: {
         type: String,
         required: [true, 'Email is required']

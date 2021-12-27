@@ -14,7 +14,7 @@ router.post('/', [
     check('email', 'Email is not valid').isEmail(),
     check('email').custom(emailValidation),
     check('password', 'Password must be 6 characters or more').isLength({ min: 6 }),
-    check('role').custom(roleValidation),
+    check('role').optional().custom(roleValidation),
     validateFields
 ], postUser);
 
