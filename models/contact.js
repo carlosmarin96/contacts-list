@@ -9,6 +9,11 @@ const ContactSchema = Schema({
         type: String,
         required: [true, 'Email is required']
     },
+    gender: {
+        type: String,
+        required: [true, 'Gender is required'],
+        enum: ['F', 'M', 'O']
+    },
     phone: {
         type: String
     },

@@ -1,6 +1,14 @@
 
 const Role = require('../models/role');
 const User = require('../models/user');
+const Gender = require('../models/gender');
+
+const genderValidation = async (gender = '') => {
+    const genderExist = await Gender.findOne({ gender });
+    if (!genderExist) {
+        throw new Error(`Gender ${genderExist} is not valid`);
+    }
+}
 
 const roleValidation = async (role = '') => {
     const roleExist = await Role.findOne({ role });
@@ -27,5 +35,6 @@ const userExistById = async (id) => {
 module.exports = {
     roleValidation,
     emailValidation,
-    userExistById
+    userExistById,
+    genderValidation
 }
