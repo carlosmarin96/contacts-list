@@ -1,6 +1,6 @@
 const { response, request } = require('express');
 
-const Contact = require('../models/contact');
+const { Contact } = require('../models');
 
 
 
@@ -25,6 +25,7 @@ const getContacts = async (req = request, res = response) => {
 
 const postContact = async (req, res = response) => {
     const { name, lastName, email, phone, company, birthday } = req.body;
+    const gender = req.body.gender.toLowerCase();
 
     const createdBy = req.user._id;
 
@@ -38,7 +39,7 @@ const postContact = async (req, res = response) => {
     }
 
     // Verify if phone is unique or not
-    if (phone) {
+    if (phone !== '') {
         const notUniquePhone = await Contact.findOne({ phone: phone, createdBy: createdBy });
         if (notUniquePhone) {
             return res.status(400).json({
@@ -47,11 +48,22 @@ const postContact = async (req, res = response) => {
         }
     }
 
-    const contact = new Contact({ name, lastName, email, phone, company, birthday, createdBy });
+    const data = {
+        name,
+        lastName,
+        email,
+        gender,
+        phone,
+        company,
+        birthday,
+        createdBy
+    }
+
+    const contact = new Contact(data);
 
     await contact.save();
 
-    res.json({
+    res.status(201).json({
         contact
     });
 }
