@@ -5,10 +5,6 @@ const UserSchema = Schema({
         type: String,
         required: [true, 'Name is required']
     },
-    lastName: {
-        type: String,
-        required: [true, 'Lastname is required']
-    },
     email: {
         type: String,
         required: [true, 'Email is required'],
@@ -24,7 +20,8 @@ const UserSchema = Schema({
     role: {
         type: String,
         required: true,
-        enum: ['ADMIN_ROLE', 'USER_ROLE']
+        default: 'USER_ROLE'
+        // enum: ['ADMIN_ROLE', 'USER_ROLE']
     },
     status: {
         type: Boolean,

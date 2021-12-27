@@ -11,7 +11,6 @@ const router = Router();
 
 router.post('/', [
     check('name', 'Name is required').not().isEmpty(),
-    check('lastName', 'Lastname is required').not().isEmpty(),
     check('email', 'Email is not valid').isEmail(),
     check('email').custom(emailValidation),
     check('password', 'Password must be 6 characters or more').isLength({ min: 6 }),
