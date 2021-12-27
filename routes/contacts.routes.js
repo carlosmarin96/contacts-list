@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { postContact, getContacts, getContactById } = require('../controllers/contacts.controllers');
+const { postContact, getContacts, getContactById, putContact } = require('../controllers/contacts.controllers');
 const { genderValidation, contactExist } = require('../helpers/db-validators');
 const { validateJWT, validateFields } = require('../middlewares');
 
@@ -29,9 +29,17 @@ router.post('/', [
     validateFields
 ], postContact);
 
-// router.put('/:id', [], putContact);
+router.put('/:id', [
+    validateJWT,
+    check('name', 'Name is required').not().isEmpty(),
+    check('email', 'Email is not valid').isEmail(),
+    check('gender').custom(genderValidation),
+    check('phone', 'Phone is not valid').optional().isLength({ min: 10 }),
+    check('birthday', 'Birthday format is not valid').optional().isDate(),
+    validateFields
+], putContact);
 
-// router.delete(':id', [], deleteContact);
+// router.delete('/:id', [], deleteContact);
 
 
 module.exports = router;

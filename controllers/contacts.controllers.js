@@ -26,9 +26,9 @@ const getContactById = async (req = request, res = response) => {
     const { id } = req.params;
     const idFromUser = req.user._id;
 
-    const contact = await Contact.findById(id).populate('createdBy', 'name');
+    const contact = await Contact.findById(id);
 
-    if (JSON.stringify(contact.createdBy._id) !== JSON.stringify(idFromUser)) {
+    if (JSON.stringify(contact.createdBy) !== JSON.stringify(idFromUser)) {
         return res.status(401).json({ msg: "No authorized" });
     }
 
@@ -80,8 +80,36 @@ const postContact = async (req, res = response) => {
     });
 }
 
+const putContact = async (req, res = response) => {
+    const { id } = req.params;
+    const idFromUser = req.user._id;
+    const { _id, google, date_added, ...rest } = req.body;
+
+    // Do it helper
+    const contact = await Contact.findById(id);
+
+    if (JSON.stringify(contact.createdBy) !== JSON.stringify(idFromUser)) {
+        return res.status(401).json({ msg: "No authorized" });
+    }
+
+    // Do it helper
+
+    const contact = await Contact.findByIdAndUpdate(id, rest, { new: true });
+
+    res.json({
+        id,
+        contact
+    });
+}
+
+const deleteContact = async (req, res = response) => {
+
+}
+
 module.exports = {
     getContacts,
     postContact,
-    getContactById
+    getContactById,
+    putContact,
+    deleteContact
 }
