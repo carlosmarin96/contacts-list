@@ -30,7 +30,11 @@
 
             const body = { id_token: response.credential };
 
-            fetch('https://contacts-list-by-marin.herokuapp.com/api/auth/google', {
+            let url = (window.location.hostname.includes('localhost'))
+                ? 'http://localhost:8080/api/auth/google/token'
+                : 'https://contacts-list-by-marin.herokuapp.com/api/auth/google'
+
+            fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
