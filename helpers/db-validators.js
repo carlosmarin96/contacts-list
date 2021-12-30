@@ -38,11 +38,21 @@ const userExistById = async (id) => {
     }
 }
 
+const validateUser = async (id) => {
+
+    const idFromUser = req.user._id;
+    const contact = await Contact.findById(id);
+
+    if (JSON.stringify(contact.createdBy) !== JSON.stringify(idFromUser)) {
+        throw new Error("No authorized");
+    }
+}
 
 module.exports = {
     roleValidation,
     emailValidation,
     userExistById,
     genderValidation,
-    contactExist
+    contactExist,
+    validateUser
 }

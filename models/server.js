@@ -11,6 +11,7 @@ class Server {
         this.paths = {
             auth: '/api/auth',
             contacts: '/api/contacts',
+            search: '/api/search',
             users: '/api/users',
         }
 
@@ -35,6 +36,7 @@ class Server {
     routes() {
         this.app.use(this.paths.auth, require('../routes/auth.routes'));
         this.app.use(this.paths.contacts, require('../routes/contacts.routes'));
+        this.app.use(this.paths.search, require('../routes/search.routes'));
         this.app.use(this.paths.users, require('../routes/users.routes'));
 
     }
